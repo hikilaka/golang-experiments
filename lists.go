@@ -5,10 +5,10 @@ import (
 	"fmt"
 )
 
-type List interface {
-	Add(int)
-	Remove(int) error
-	AsSlice() []int
+type List[T comparable] interface {
+	Add(T)
+	Remove(T) error
+	AsSlice() []T
 }
 
 var (
@@ -16,18 +16,18 @@ var (
 	ErrElementToDeleteNotFound = errors.New("List does not contain such element to delete")
 )
 
-type node struct {
-	data int
-	next *node
+type node[T comparable] struct {
+	data T
+	next *node[T]
 }
 
-type LinkedList struct {
-	baseNode *node
+type LinkedList[T comparable] struct {
+	baseNode *node[T]
 }
 
-func (list *LinkedList) Add(data int) {
+func (list *LinkedList[T]) Add(data T) {
 	// create the node which we'll add to this list
-	newNode := &node{data, nil}
+	newNode := &node[T]{data, nil}
 
 	// check if the list has any elements at all
 	if list.baseNode == nil {
@@ -46,7 +46,7 @@ func (list *LinkedList) Add(data int) {
 	}
 }
 
-func (list *LinkedList) Remove(data int) error {
+func (list *LinkedList[T]) Remove(data T) error {
 	// check that the list has any elements
 	if list.baseNode == nil {
 		return ErrNoElementsToDelete
@@ -56,7 +56,7 @@ func (list *LinkedList) Remove(data int) error {
 	// and keep track of the previous node so that we can
 	// attach it to the currentNode's next element
 	currentNode := list.baseNode
-	var previousNode *node = nil
+	var previousNode *node[T] = nil
 
 	for currentNode != nil {
 		if currentNode.data == data {
@@ -75,8 +75,8 @@ func (list *LinkedList) Remove(data int) error {
 	return ErrElementToDeleteNotFound
 }
 
-func (list LinkedList) AsSlice() []int {
-	var slice []int
+func (list LinkedList[T]) AsSlice() []T {
+	var slice []T
 
 	// only if the list contains elements will we append to the empty slice
 	if list.baseNode != nil {
@@ -105,7 +105,7 @@ func (list LinkedList) AsSlice() []int {
 // TODO: write tests
 
 func main() {
-	list := LinkedList{}
+	list := LinkedList[int]{}
 
 	for i := range 5 {
 		list.Add(i)
