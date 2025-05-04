@@ -1,5 +1,7 @@
 # Golang Experiments
 
+[![CI](https://github.com/hikilaka/golang-experiments/actions/workflows/ci.yaml/badge.svg)](https://github.com/hikilaka/golang-experiments/actions/workflows/ci.yaml)
+
 This repository is a personal project created to learn and experiment with the Go programming language. It contains various implementations and tests to explore Go's features, including generics, interfaces, and data structures.
 
 ## Project Structure
