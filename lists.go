@@ -75,7 +75,7 @@ func (list *LinkedList) Remove(data int) error {
 	return ErrElementToDeleteNotFound
 }
 
-func (list *LinkedList) AsSlice() []int {
+func (list LinkedList) AsSlice() []int {
 	var slice []int
 
 	// only if the list contains elements will we append to the empty slice
