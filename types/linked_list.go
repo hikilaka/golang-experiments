@@ -1,33 +1,17 @@
-package main
+package types
 
-import (
-	"errors"
-	"fmt"
-)
-
-type List[T comparable] interface {
-	Add(T)
-	Remove(T) error
-	AsSlice() []T
-}
-
-var (
-	ErrNoElementsToDelete      = errors.New("List does not contain any elements to delete")
-	ErrElementToDeleteNotFound = errors.New("List does not contain such element to delete")
-)
-
-type node[T comparable] struct {
+type Node[T comparable] struct {
 	data T
-	next *node[T]
+	next *Node[T]
 }
 
 type LinkedList[T comparable] struct {
-	baseNode *node[T]
+	baseNode *Node[T]
 }
 
 func (list *LinkedList[T]) Add(data T) {
 	// create the node which we'll add to this list
-	newNode := &node[T]{data, nil}
+	newNode := &Node[T]{data, nil}
 
 	// check if the list has any elements at all
 	if list.baseNode == nil {
@@ -56,7 +40,7 @@ func (list *LinkedList[T]) Remove(data T) error {
 	// and keep track of the previous node so that we can
 	// attach it to the currentNode's next element
 	currentNode := list.baseNode
-	var previousNode *node[T] = nil
+	var previousNode *Node[T] = nil
 
 	for currentNode != nil {
 		if currentNode.data == data {
@@ -97,25 +81,4 @@ func (list LinkedList[T]) AsSlice() []T {
 	}
 
 	return slice
-}
-
-// TODO: Array list
-// TODO: Doubly linked list
-
-// TODO: write tests
-
-func main() {
-	list := LinkedList[int]{}
-
-	for i := range 5 {
-		list.Add(i)
-	}
-
-	// expected [0 1 2 3 4]
-	fmt.Println(list.AsSlice())
-
-	list.Remove(2)
-
-	// expected [0 1 3 4]
-	fmt.Println(list.AsSlice())
 }
