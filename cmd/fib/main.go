@@ -1,4 +1,4 @@
-package fib
+package main
 
 import (
 	"fmt"
@@ -10,7 +10,7 @@ func fibonacci(n uint) uint {
 		return n
 	}
 
-	return fib(n-2) + fib(n-1)
+	return fibonacci(n-2) + fibonacci(n-1)
 }
 
 func memoize(fn func(uint) uint) func(uint) uint {
